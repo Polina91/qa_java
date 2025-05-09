@@ -50,8 +50,9 @@ public class TestLion {
     @Test
     public void testLionFood() throws Exception {
         Lion lion = new Lion(family, sex);
-        Mockito.when(lion.getFood()).thenReturn(List.of("Животные", "Птицы", "Рыба"));
-        Assert.assertEquals(List.of("Животные", "Птицы", "Рыба"), lion.getFood());
+        List<String> expectedFoodList = List.of("Животные", "Птицы", "Рыба");
+        Mockito.when(family.getFood()).thenReturn(expectedFoodList);
+        Assert.assertEquals(expectedFoodList, lion.getFood());
     }
 
     @Test
@@ -66,5 +67,21 @@ public class TestLion {
         Lion lion = new Lion(family, sex);
         lion.getKittens();
         Mockito.verify(family, Mockito.times(1)).getYoungs();
+    }
+
+    @Test
+    public void testLionSexException() {
+        Exception exception = Assert.assertThrows(Exception.class, () -> {
+            new Lion(family, "");
+        });
+        Assert.assertEquals("Используйте допустимые значения пола животного - самей или самка", exception.getMessage());
+    }
+
+    @Test
+    public void testLionFoodException() throws Exception {
+        Mockito.when(family.getFood()).thenThrow(new Exception("Ошибка получения еды"));
+        Lion lion = new Lion(family, "Самец");
+        Exception exception = Assert.assertThrows(Exception.class, lion::getFood);
+        Assert.assertEquals("Ошибка получения еды", exception.getMessage());
     }
 }

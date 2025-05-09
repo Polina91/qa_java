@@ -19,20 +19,18 @@ public class TestFeline {
     }
 
     @Test
-    public void testFelineFood() throws Exception {
+    public void testFelineGetFood() throws Exception {
         Assert.assertEquals(List.of("Животные", "Птицы", "Рыба"), feline.getFood());
+    }
+
+    @Test
+    public void testFelineEatMeat() throws Exception {
         Assert.assertEquals(List.of("Животные", "Птицы", "Рыба"), feline.eatMeat());
     }
 
     @Test
     public void testFelineYoungs() {
         feline.getYoungs();
-        Mockito.verify(feline, Mockito.times(1)).getKittens(1);
-    }
-
-    @Test
-    public void testFelineKittens() {
-        feline.getKittens(1);
         Mockito.verify(feline, Mockito.times(1)).getKittens(1);
     }
 
